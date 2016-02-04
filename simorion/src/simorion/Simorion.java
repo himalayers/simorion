@@ -7,15 +7,12 @@ package simorion;
 
 /**
  *
- * @author Student
+ * @author Mark Fowden
  */
 public class Simorion {
-    String name = "ben";
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        
     }
     
 }
