@@ -10,7 +10,7 @@ package simorion;
  * @author Student
  */
 public class Simorion {
-
+    String name = "ben";
     /**
      * @param args the command line arguments
      */
