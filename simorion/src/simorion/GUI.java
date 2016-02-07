@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simorion;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -14,11 +9,6 @@ import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 
-
-/**
- *
- * @author Student
- */
 public class GUI extends javax.swing.JFrame {
     /*
     * program created by wunmi ;)
@@ -50,14 +40,11 @@ public class GUI extends javax.swing.JFrame {
             super(s);
         }
     }
-        
-    
     class ONButton extends JButton {
         ONButton(String s){
             super(s);
         }
-        }
-
+    }
     class L1Button extends JButton{
         L1Button (String s){
             super(s);
@@ -86,7 +73,7 @@ public class GUI extends javax.swing.JFrame {
    class R2Button extends JButton{
         R2Button (String s){
             super(s);
-  }
+        }
    }
    class R3Button extends JButton{
         R3Button (String s){
@@ -98,24 +85,25 @@ public class GUI extends javax.swing.JFrame {
             super(s);
         }
    }
+   
    //the array of inner buttons
-   class innerbuttons extends JButton{
-        public innerbuttons(){
-        // new grid object to arrange the buttons
-        
-        setLayout(new GridLayout(16,16));        
-       JButton [][] button=new JButton[16][16];
-       for (int i=0;i<button.length;i++){
-            for (int j=0;j<button[i].length;j++){
-            button[i][j]= new JButton("");
-            add(button[i][j]);
-            
-            
-            
+   class innerbuttons extends JButton
+   {
+        public innerbuttons()
+        {
+            // new grid object to arrange the buttons
+
+            setLayout(new GridLayout(16,16));        
+            JButton [][] button=new JButton[16][16];
+            for (int i=0;i<button.length;i++)
+            {
+                for (int j=0;j<button[i].length;j++)
+                {
+                    button[i][j]= new JButton("");
+                    add(button[i][j]);
+                }
             }
-       }
         }
-    
     }
    
    
@@ -132,6 +120,10 @@ public class GUI extends javax.swing.JFrame {
         setTitle("Simori-on");
         //using GridBagConstraints to specify the look of the 
         //whole program.
+        
+        //We could seriously truncate this code by eliminating the multiple copies of gbc.gridx=0;
+        //Putting it in a for loop, and using arraylists for the Ri and Li objects,
+        //But some guy on the internet said to specify gbc's every time an add is called...
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15,15,15,15);
         gbc.gridx=0;
@@ -164,7 +156,9 @@ public class GUI extends javax.swing.JFrame {
         add(panh, BorderLayout.BEFORE_FIRST_LINE);
         add(butt, BorderLayout.CENTER);
     }
-
+    
+    
+    //Pre-generated code we're not meant to change
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
