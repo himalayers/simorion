@@ -8,6 +8,7 @@ import java.awt.TextField;
 import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
+import java.awt.event.*;
 
 public class GUI extends javax.swing.JFrame {
     /*
@@ -100,8 +101,24 @@ public class GUI extends javax.swing.JFrame {
                 for (int j=0;j<button[i].length;j++)
                 {
                     button[i][j]= new JButton("");
+                    button[i][j].addActionListener(new OnClickActionListener(i,j));
                     add(button[i][j]);
                 }
+            }
+        }
+        
+        private class OnClickActionListener implements ActionListener{
+            private final int i;
+            private final int j;
+            
+            public OnClickActionListener(int i, int j){
+                this.i = i;
+                this.j = j;
+            }
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //Code that happens when button clicked
+                //currentLayer.toggleDot(i,j);
             }
         }
     }
@@ -186,6 +203,10 @@ public class GUI extends javax.swing.JFrame {
         frame.setSize(800,400);
         frame.setVisible(true);
         frame.setResizable(true);
+        
+        //Must set up the logical layer objects in order to manipulate them when on click.
+        Layer[] layers = new Layer[15];
+        Layer currentLayer = layers[0];
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
