@@ -15,5 +15,6 @@ public class SongLine{
     }
     
     void removeAllDots(){
+            dots = new boolean[16];
     }
 }
