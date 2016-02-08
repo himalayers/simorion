@@ -1,0 +1,19 @@
+public class SongLine{
+    serializable boolean[] dots = new boolean[16];
+
+    boolean toggleDot(int position){
+        if (dots[position])
+        {
+            dots[position]=false;
+            return false;
+        }
+        else
+        {
+            dots[position]=true;
+            return true;
+        }
+    }
+    
+    void removeAllDots(){
+    }
+}
