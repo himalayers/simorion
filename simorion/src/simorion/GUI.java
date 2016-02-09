@@ -1,5 +1,6 @@
 package simorion;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
@@ -35,12 +36,13 @@ public class GUI extends javax.swing.JFrame {
      * empty classes for the mode buttons
      * 
      */
-   
-   class OKButton extends JButton {
+    
+    class OKButton extends JButton {
         OKButton(String s){
             super(s);
         }
     }
+    
     class ONButton extends JButton {
         ONButton(String s){
             super(s);
@@ -95,14 +97,15 @@ public class GUI extends javax.swing.JFrame {
             // new grid object to arrange the buttons
 
             setLayout(new GridLayout(16,16));        
-            JButton [][] button=new JButton[16][16];
-            for (int i=0;i<button.length;i++)
+            JButton [][] buttons=new JButton[16][16];
+            for (int i=0;i<buttons.length;i++)
             {
-                for (int j=0;j<button[i].length;j++)
+                for (int j=0;j<buttons[i].length;j++)
                 {
-                    button[i][j]= new JButton("");
-                    button[i][j].addActionListener(new OnClickActionListener(i,j));
-                    add(button[i][j]);
+                    buttons[i][j]= new JButton("");
+                    buttons[i][j].addActionListener(new OnClickActionListener(i,j,buttons[i][j]));
+                    buttons[i][j].setBackground(Color.white);
+                    add(buttons[i][j]);
                 }
             }
         }
@@ -110,15 +113,23 @@ public class GUI extends javax.swing.JFrame {
         private class OnClickActionListener implements ActionListener{
             private final int i;
             private final int j;
+            private final JButton button;
             
-            public OnClickActionListener(int i, int j){
+            public OnClickActionListener(int i, int j, JButton button){
                 this.i = i;
                 this.j = j;
-            }
+                this.button = button;
+            } 
             @Override
             public void actionPerformed(ActionEvent e){
                 //Code that happens when button clicked
-                //currentLayer.toggleDot(i,j);
+                
+                //Change colour (put picture changing here).
+                if(Controller.getCurrentLayer().toggleDot(i,j)){
+                    button.setBackground(Color.green);
+                } else {
+                    button.setBackground(Color.white);
+                }
             }
         }
     }
@@ -196,17 +207,13 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public void setUp(){
         JFrame frame = new GUI();
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,400);
         frame.setVisible(true);
         frame.setResizable(true);
-        
-        //Must set up the logical layer objects in order to manipulate them when on click.
-        Layer[] layers = new Layer[15];
-        Layer currentLayer = layers[0];
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

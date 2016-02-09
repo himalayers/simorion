@@ -3,9 +3,13 @@ import java.io.Serializable;
 
 //Can serializable only be applied to the array? probably a question for sprint 3 etc.
 public class Layer implements Serializable{
-    boolean[][] dots = new boolean[16][16];
+    boolean[][] dots;
     
-    boolean toggleDot(int posx, int posy){
+    public Layer(){
+        dots = new boolean[16][16];
+    }
+    
+    public boolean toggleDot(int posx, int posy){
         if (dots[posx][posy])
         {
             dots[posx][posy] = false;
@@ -17,8 +21,8 @@ public class Layer implements Serializable{
             return true;
         }
     }
-    
-    void ClearDots(){
+
+    public void ClearDots(){
             dots = new boolean[16][16];
     }
 }
