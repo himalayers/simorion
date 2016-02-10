@@ -58,6 +58,7 @@ public class GUI extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e){
             //Code that happens when button clicked
+            Image gridOffImg;
             try{
                 gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
             
