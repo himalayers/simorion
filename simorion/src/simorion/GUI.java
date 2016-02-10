@@ -10,6 +10,13 @@ import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.imageio.*;
+import java.io.*;
+import javax.swing.BorderFactory;
+import javax.swing.border.*;
+import java.awt.Image;
+import java.awt.geom.RoundRectangle2D;
 
 /*
 * @author Olawunmi Lawal
@@ -51,17 +58,24 @@ public class GUI extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e){
             //Code that happens when button clicked
-            for (int i=0;i<butt.buttons.length;i++)
-            {
-                for (int j=0;j<butt.buttons[i].length;j++)
+            try{
+                gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
+            
+                for (int i=0;i<butt.buttons.length;i++)
                 {
-                    if (!state)
+                    for (int j=0;j<butt.buttons[i].length;j++)
                     {
-                        Controller.getCurrentLayer().ClearDots();
-                        butt.buttons[i][j].setBackground(Color.white);
+                        if (!state)
+                        {
+                            Controller.getCurrentLayer().ClearDots();
+                            butt.buttons[i][j].setIcon(new ImageIcon(gridOffImg));
+                        }
+                        butt.buttons[i][j].setEnabled(state);
                     }
-                    butt.buttons[i][j].setEnabled(state);
                 }
+                
+            } catch (IOException ex) {
+                //image not found
             }
             
             ok.setEnabled(state);
@@ -147,15 +161,29 @@ public class GUI extends javax.swing.JFrame {
 
             setLayout(new GridLayout(16,16));        
             buttons=new JButton[16][16];
-            for (int i=0;i<buttons.length;i++)
-            {
-                for (int j=0;j<buttons[i].length;j++)
+            
+            Border noBorder = BorderFactory.createEmptyBorder(); //used in for loop
+            Image gridOffImg;
+            try{
+                gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
+            
+                for (int i=0;i<buttons.length;i++)
                 {
-                    buttons[i][j]= new JButton("");
-                    buttons[i][j].addActionListener(new OnClickActionListener(i,j,buttons[i][j]));
-                    buttons[i][j].setBackground(Color.white);
-                    add(buttons[i][j]);
+                    for (int j=0;j<buttons[i].length;j++)
+                    {
+                        buttons[i][j]= new JButton("");
+                        buttons[i][j].addActionListener(new OnClickActionListener(i,j,buttons[i][j]));
+                        buttons[i][j].setBackground(Color.white);
+
+
+                        buttons[i][j].setBorder(noBorder);
+                        buttons[i][j].setIcon(new ImageIcon(gridOffImg));
+
+                        add(buttons[i][j]);
+                    }
                 }
+            } catch (IOException ex) {
+                //image not found
             }
         }
         
@@ -177,9 +205,19 @@ public class GUI extends javax.swing.JFrame {
                 
                 //Change colour (put picture changing here).
                 if(Controller.getCurrentLayer().toggleDot(i,j)){
-                    button.setBackground(Color.green);
+                    try {
+                        Image gridOnImg = ImageIO.read(getClass().getResource("resources/gridon.png"));
+                        button.setIcon(new ImageIcon(gridOnImg));
+                    } catch (IOException ex) {
+                        //
+                    }   
                 } else {
-                    button.setBackground(Color.white);
+                    try {
+                        Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
+                        button.setIcon(new ImageIcon(gridOffImg));
+                    } catch (IOException ex) {
+                        //
+                    }   
                 }
             }
         }
