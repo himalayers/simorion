@@ -11,6 +11,9 @@ import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.event.*;
 
+/*
+* @author Olawunmi Lawal
+*/
 public class GUI extends javax.swing.JFrame {
     /*
     * program created by wunmi ;)
@@ -32,11 +35,11 @@ public class GUI extends javax.swing.JFrame {
     final R4Button  R4 = new R4Button("R4");
     final innerbuttons butt = new innerbuttons();
     
-    /*
-     * empty classes for the mode buttons
-     * 
-     */
+
     
+    /*
+     * @author Tom Fullalove
+     */
     class ONButton extends JButton implements ActionListener{
         boolean state;
         ONButton(String s){
@@ -84,7 +87,10 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
-   
+    /*
+     * empty classes for the mode buttons
+     * 
+     */
     class OKButton extends JButton {
         OKButton(String s){
             super(s);
@@ -182,6 +188,7 @@ public class GUI extends javax.swing.JFrame {
    
    
     /**
+     * @author Olawunmi Lawal
      * Creates new form GUI
      */
     public GUI() {
