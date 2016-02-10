@@ -19,14 +19,13 @@ import java.awt.Image;
 import java.awt.geom.RoundRectangle2D;
 
 /*
+* Class GUI to create Simori-On
 * @author Olawunmi Lawal
+* @version
 */
 public class GUI extends javax.swing.JFrame {
-    /*
-    * program created by wunmi ;)
-    * this part makes objects of the mode classes,
-    * and the innerbuttons
-    */  
+
+    //Attributes for the GUI
     
     public JButton button = new JButton();
     final TextField display =new TextField("LCD",30);
@@ -40,11 +39,12 @@ public class GUI extends javax.swing.JFrame {
     final R2Button  R2 = new R2Button("R2");
     final R3Button  R3 = new R3Button("R3");
     final R4Button  R4 = new R4Button("R4");
-    final innerbuttons butt = new innerbuttons();
+    final innerbuttons ibutton = new innerbuttons();
     
 
     
     /*
+     * Creates an ON button class to perform an action when it is clicked
      * @author Tom Fullalove
      */
     class ONButton extends JButton implements ActionListener{
@@ -55,9 +55,11 @@ public class GUI extends javax.swing.JFrame {
             state=false;//false means off
         }
         
+        /* Method that is ran when the on button is clicked
+        * @author
+        */
         @Override
         public void actionPerformed(ActionEvent e){
-            //Code that happens when button clicked
             try{
                 Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
             
@@ -68,9 +70,9 @@ public class GUI extends javax.swing.JFrame {
                         if (!state)
                         {
                             Controller.getCurrentLayer().ClearDots();
-                            butt.buttons[i][j].setIcon(new ImageIcon(gridOffImg));
+                            ibutton.buttons[i][j].setIcon(new ImageIcon(gridOffImg));
                         }
-                        butt.buttons[i][j].setEnabled(state);
+                        ibutton.buttons[i][j].setEnabled(state);
                     }
                 }
                 
@@ -78,6 +80,7 @@ public class GUI extends javax.swing.JFrame {
                 //image not found
             }
             
+            //sets every button to be active or inactive.
             ok.setEnabled(state);
             L1.setEnabled(state);
             L2.setEnabled(state);
@@ -90,7 +93,7 @@ public class GUI extends javax.swing.JFrame {
             display.setEnabled(state);
             
             state = !state;
-            if (state)
+            if (state) //if statement updates the text on the On button
             {
                 this.setText("ON");
             }
@@ -102,8 +105,8 @@ public class GUI extends javax.swing.JFrame {
     }
     
     /*
-     * empty classes for the mode buttons
-     * 
+     * Classes for the "OK" and the eight mode buttons.
+     * @author
      */
     class OKButton extends JButton {
         OKButton(String s){
@@ -151,7 +154,10 @@ public class GUI extends javax.swing.JFrame {
         }
    }
    
-   //the array of inner buttons
+  /*
+  * Class to create the 16x16 matrix buttons for each layer
+  * @author 
+  */
    class innerbuttons extends JPanel
    {
        JButton [][] buttons;
@@ -165,7 +171,7 @@ public class GUI extends javax.swing.JFrame {
             try{
                 Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
             
-                for (int i=0;i<buttons.length;i++)
+                for (int i=0;i<buttons.length;i++) //for loop to add the OnClickActionListener funtion to all the buttons
                 {
                     for (int j=0;j<buttons[i].length;j++)
                     {
@@ -186,10 +192,13 @@ public class GUI extends javax.swing.JFrame {
         }
         
         
-        
+        /*
+        * Enables the button to run the method when it is clicked
+        *@author
+        */
         private class OnClickActionListener implements ActionListener{
-            private final int i;
-            private final int j;
+            private final int i; // x coordinate
+            private final int j; // y coordinate
             private final JButton button;
             
             public OnClickActionListener(int i, int j, JButton button){
@@ -201,20 +210,20 @@ public class GUI extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e){
                 //Code that happens when button clicked
                 
-                //Change colour (put picture changing here).
+                //if statement changes the picture
                 if(Controller.getCurrentLayer().toggleDot(i,j)){
                     try {
                         Image gridOnImg = ImageIO.read(getClass().getResource("resources/gridon.png"));
                         button.setIcon(new ImageIcon(gridOnImg));
-                    } catch (IOException ex) {
-                        //
+                    } catch (IOException ex) { 
+                    
                     }   
                 } else {
                     try {
-                        Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
+                        Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png")); 
                         button.setIcon(new ImageIcon(gridOffImg));
                     } catch (IOException ex) {
-                        //
+                    
                     }   
                 }
             }
@@ -225,13 +234,13 @@ public class GUI extends javax.swing.JFrame {
    
     /**
      * @author Olawunmi Lawal
-     * Creates new form GUI
+     * Constructor for the GUI
      */
     public GUI() {
-        JPanel panl=new JPanel(new GridBagLayout());
-        JPanel panr=new JPanel(new GridBagLayout());
-        JPanel panb=new JPanel(new GridBagLayout());
-        JPanel panh=new JPanel(new GridBagLayout());
+        JPanel panleft = new JPanel(new GridBagLayout());
+        JPanel panright = new JPanel(new GridBagLayout());
+        JPanel panbottom = new JPanel(new GridBagLayout());
+        JPanel pantop = new JPanel(new GridBagLayout());
         
         setTitle("Simori-on");
         //using GridBagConstraints to specify the look of the 
@@ -244,35 +253,36 @@ public class GUI extends javax.swing.JFrame {
         gbc.insets = new Insets(15,15,15,15);
         gbc.gridx=0;
         gbc.gridy=0;
-        panl.add(L1,gbc);
-        panr.add(R1,gbc);
-        panb.add(ok,gbc);
+        panleft.add(L1,gbc);
+        panright.add(R1,gbc);
+        panbottom.add(ok,gbc);
         gbc.gridx=0;
         gbc.gridy=1;
-        panl.add(L2,gbc);
-        panr.add(R2,gbc);
+        panleft.add(L2,gbc);
+        panright.add(R2,gbc);
         gbc.gridx=0;
         gbc.gridy=2;
-        panl.add(L3,gbc);
-        panr.add(R3,gbc);
+        panleft.add(L3,gbc);
+        panright.add(R3,gbc);
         gbc.gridx=0;
         gbc.gridy=3;
-        panl.add(L4,gbc);
-        panr.add(R4,gbc);
+        panleft.add(L4,gbc);
+        panright.add(R4,gbc);
         
         gbc.gridx=10;
         gbc.gridy=0;
-        panb.add(display, gbc);
+        panbottom.add(display, gbc);
         gbc.gridx = 0;
-        panh.add(on,gbc);
+        pantop.add(on,gbc);
        
-        add(butt);
+        add(ibutton);
         
-        add(panl, BorderLayout.WEST);
-        add(panr, BorderLayout.EAST);
-        add(panb, BorderLayout.PAGE_END);
-        add(panh, BorderLayout.BEFORE_FIRST_LINE);
+        add(panleft, BorderLayout.WEST);
+        add(panright, BorderLayout.EAST);
+        add(panbottom, BorderLayout.PAGE_END);
+        add(pantop, BorderLayout.BEFORE_FIRST_LINE);
         
+        //Turn the Simori-ON off
         new java.util.Timer().schedule( 
             new java.util.TimerTask() {
                 @Override
@@ -306,6 +316,10 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+    * A method used to set up the GUI and limit the form to a rounded rectangle
+    * @author
+    */
     public void setUp(){
         JFrame frame = new GUI();
         
