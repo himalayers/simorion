@@ -1,6 +1,6 @@
 # simorion
 Simulation of a Tenori-ON in Java, HYPE.
-:squirrel:
+:squirrel::shipit:
 pay your calcium tax
 
                                :oooooooooo:                           
