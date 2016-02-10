@@ -310,9 +310,13 @@ public class GUI extends javax.swing.JFrame {
 
     public void setUp(){
         JFrame frame = new GUI();
+        
+        frame.setUndecorated(true);
+        frame.setShape(new RoundRectangle2D.Double(0,0,970,905,200,200));
+        
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,400);
+        frame.setSize(970,905);
         frame.setVisible(true);
         frame.setResizable(true);
     }
