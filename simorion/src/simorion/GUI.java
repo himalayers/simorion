@@ -21,7 +21,7 @@ public class GUI extends javax.swing.JFrame {
     public JButton button = new JButton();
     final TextField display =new TextField("LCD",30);
     final OKButton  ok = new OKButton("OK");
-    final ONButton  on = new ONButton("ON");
+    final ONButton  on = new ONButton("OFF");
     final L1Button  L1 = new L1Button("L1");
     final L2Button  L2 = new L2Button("L2");
     final L3Button  L3 = new L3Button("L3");
@@ -37,14 +37,56 @@ public class GUI extends javax.swing.JFrame {
      * 
      */
     
-    class OKButton extends JButton {
-        OKButton(String s){
+    class ONButton extends JButton implements ActionListener{
+        boolean state;
+        ONButton(String s){
             super(s);
+            addActionListener(this);
+            state=false;//false means off
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e){
+            //Code that happens when button clicked
+            for (int i=0;i<butt.buttons.length;i++)
+            {
+                for (int j=0;j<butt.buttons[i].length;j++)
+                {
+                    if (!state)
+                    {
+                        Controller.getCurrentLayer().ClearDots();
+                        butt.buttons[i][j].setBackground(Color.white);
+                    }
+                    butt.buttons[i][j].setEnabled(state);
+                }
+            }
+            
+            ok.setEnabled(state);
+            L1.setEnabled(state);
+            L2.setEnabled(state);
+            L3.setEnabled(state);
+            L4.setEnabled(state);
+            R1.setEnabled(state);
+            R2.setEnabled(state);
+            R3.setEnabled(state);
+            R4.setEnabled(state);
+            display.setEnabled(state);
+            
+            state = !state;
+            if (state)
+            {
+                this.setText("ON");
+            }
+            else
+            {
+                this.setText("OFF");
+            }
         }
     }
     
-    class ONButton extends JButton {
-        ONButton(String s){
+   
+    class OKButton extends JButton {
+        OKButton(String s){
             super(s);
         }
     }
@@ -90,14 +132,15 @@ public class GUI extends javax.swing.JFrame {
    }
    
    //the array of inner buttons
-   class innerbuttons extends JButton
+   class innerbuttons extends JPanel
    {
+       JButton [][] buttons;
         public innerbuttons()
         {
             // new grid object to arrange the buttons
 
             setLayout(new GridLayout(16,16));        
-            JButton [][] buttons=new JButton[16][16];
+            buttons=new JButton[16][16];
             for (int i=0;i<buttons.length;i++)
             {
                 for (int j=0;j<buttons[i].length;j++)
@@ -109,6 +152,8 @@ public class GUI extends javax.swing.JFrame {
                 }
             }
         }
+        
+        
         
         private class OnClickActionListener implements ActionListener{
             private final int i;
@@ -178,11 +223,22 @@ public class GUI extends javax.swing.JFrame {
         gbc.gridx = 0;
         panh.add(on,gbc);
        
+        add(butt);
+        
         add(panl, BorderLayout.WEST);
         add(panr, BorderLayout.EAST);
         add(panb, BorderLayout.PAGE_END);
         add(panh, BorderLayout.BEFORE_FIRST_LINE);
-        add(butt, BorderLayout.CENTER);
+        
+        new java.util.Timer().schedule( 
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    on.doClick();
+                }
+            }, 
+            0
+        );
     }
     
     
@@ -218,4 +274,6 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    
+    
 }
