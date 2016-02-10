@@ -64,9 +64,9 @@ public class GUI extends javax.swing.JFrame {
             try{
                 Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
             
-                for (int i=0;i<butt.buttons.length;i++)
+                for (int i=0;i<ibutton.buttons.length;i++)
                 {
-                    for (int j=0;j<butt.buttons[i].length;j++)
+                    for (int j=0;j<ibutton.buttons[i].length;j++)
                     {
                         if (!state)
                         {
