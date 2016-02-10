@@ -1,8 +1,11 @@
 package simorion;
 import java.io.Serializable;
 
-//Can serializable only be applied to the array? probably a question for sprint 3 etc.
-@author Tom Fullalove
+/*
+*This handles a 16x16 boolean array which represent a layer of music.
+*@author Tom Fullalove
+*
+*/
 public class Layer implements Serializable{
     boolean[][] dots;
     
@@ -10,7 +13,13 @@ public class Layer implements Serializable{
         dots = new boolean[16][16];
     }
     
-    @author Tom Fullalove
+    /*
+    *Given the coordinates of a button it will toggle its stored value.
+    *@author Tom Fullalove
+    *@param posx the x coordinate of the button to be toggled
+    *@param posy the y coordinate of the button to be toggled
+    *@return returns the state of the button after being toggled
+    */
     public boolean toggleDot(int posx, int posy){
         if (dots[posx][posy])
         {
@@ -24,7 +33,10 @@ public class Layer implements Serializable{
         }
     }
 
-    
+    /*
+    *Resets the 16x16 array of dots to false.
+    *@author Ilden Dengtash
+    */
     public void ClearDots(){
             dots = new boolean[16][16];
     }
