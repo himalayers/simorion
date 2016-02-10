@@ -18,10 +18,11 @@ import javax.swing.border.*;
 import java.awt.Image;
 import java.awt.geom.RoundRectangle2D;
 
-/*
+/**
 * Class GUI to create Simori-On
-* @author Olawunmi Lawal
-* @version
+* @author Team C
+* @author JavaDoc made by Ilden
+* @version 1
 */
 public class GUI extends javax.swing.JFrame {
 
@@ -43,7 +44,7 @@ public class GUI extends javax.swing.JFrame {
     
 
     
-    /*
+    /**
      * Creates an ON button class to perform an action when it is clicked
      * @author Tom Fullalove
      */
@@ -56,7 +57,7 @@ public class GUI extends javax.swing.JFrame {
         }
         
         /* Method that is ran when the on button is clicked
-        * @author
+        * @author Tom Fullalove
         */
         @Override
         public void actionPerformed(ActionEvent e){
@@ -104,9 +105,9 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
-    /*
+    /**
      * Classes for the "OK" and the eight mode buttons.
-     * @author
+     * @author Olawunmi Lawal
      */
     class OKButton extends JButton {
         OKButton(String s){
@@ -154,9 +155,10 @@ public class GUI extends javax.swing.JFrame {
         }
    }
    
-  /*
+  /**
   * Class to create the 16x16 matrix buttons for each layer
-  * @author 
+  * @author Olawunmi Lawal
+  * @author Ben Fullalove
   */
    class innerbuttons extends JPanel
    {
@@ -192,9 +194,10 @@ public class GUI extends javax.swing.JFrame {
         }
         
         
-        /*
+        /**
         * Enables the button to run the method when it is clicked
-        *@author
+        * @author Mark Fowden
+        * @author Ben Fullalove
         */
         private class OnClickActionListener implements ActionListener{
             private final int i; // x coordinate
@@ -233,8 +236,9 @@ public class GUI extends javax.swing.JFrame {
    
    
     /**
-     * @author Olawunmi Lawal
      * Constructor for the GUI
+     * @author Olawunmi Lawal
+     * @author Ilden Dengtash
      */
     public GUI() {
         JPanel panleft = new JPanel(new GridBagLayout());
@@ -316,9 +320,10 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /*
+    /**
     * A method used to set up the GUI and limit the form to a rounded rectangle
-    * @author
+    * @author Olawunmi Lawal
+    * @author Ben Fullalove
     */
     public void setUp(){
         JFrame frame = new GUI();
