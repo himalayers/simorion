@@ -6,12 +6,15 @@
 package simorion;
 
 /**
- *
- * @author Student
+ * Sets up the GUI and creates sixteen logical layers
+ * @author Mark Fowden
  */
 public class Controller {
     static Layer currentLayer;
 
+    /*
+    * @param args arguments
+    */
     public static void main(String[] args){
         //Create GUI
         GUI mainGUI = new GUI();
@@ -28,9 +31,17 @@ public class Controller {
         setCurrentLayer(layers[0]);
     }
     
+    /*
+    * @return the current logical later
+    */
     public static Layer getCurrentLayer(){
         return currentLayer;
     }
+    
+    /*
+    *Set the current layer
+    *@param layer the 16x16 grid of booleans
+    */
     
     public static void setCurrentLayer(Layer layer){
         currentLayer = layer;
