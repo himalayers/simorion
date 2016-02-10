@@ -58,9 +58,8 @@ public class GUI extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e){
             //Code that happens when button clicked
-            Image gridOffImg;
             try{
-                gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
+                Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
             
                 for (int i=0;i<butt.buttons.length;i++)
                 {
@@ -162,11 +161,9 @@ public class GUI extends javax.swing.JFrame {
 
             setLayout(new GridLayout(16,16));        
             buttons=new JButton[16][16];
-            
             Border noBorder = BorderFactory.createEmptyBorder(); //used in for loop
-            Image gridOffImg;
             try{
-                gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
+                Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
             
                 for (int i=0;i<buttons.length;i++)
                 {
