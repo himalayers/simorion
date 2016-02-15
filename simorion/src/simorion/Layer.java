@@ -1,5 +1,6 @@
 package simorion;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /*
 *This handles a 16x16 boolean array which represent a layer of music.
@@ -7,10 +8,14 @@ import java.io.Serializable;
 *
 */
 public class Layer implements Serializable{
-    boolean[][] dots;
+    private boolean[][] dots;
+    private int instrument;
+    private int velocity;
     
     public Layer(){
         dots = new boolean[16][16];
+        instrument = 0;
+        velocity = 300;
     }
     
     /*
@@ -31,6 +36,26 @@ public class Layer implements Serializable{
             dots[posx][posy] = true;
             return true;
         }
+    }
+    
+    public boolean getDotState(int posx, int posy){
+        return dots[posx][posy];
+    }
+    
+    public boolean[] getColumn(int i){
+        boolean[] column = new boolean[16];
+        for(int row=0;row<16;row++){
+            column[row] = dots[row][i];
+        }
+        return column;
+    }
+    
+    public int getInstrument(){
+        return instrument;
+    }
+    
+    public int getVelocity(){
+        return velocity;
     }
 
     /*

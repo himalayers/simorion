@@ -17,6 +17,8 @@ import javax.swing.BorderFactory;
 import javax.swing.border.*;
 import java.awt.Image;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
 * Class GUI to create Simori-On
@@ -27,6 +29,10 @@ import java.awt.geom.RoundRectangle2D;
 public class GUI extends javax.swing.JFrame {
 
     //Attributes for the GUI
+    ImageIcon buttonOnUp = null;
+    ImageIcon buttonOnDown = null;
+    ImageIcon buttonOffUp = null;
+    ImageIcon buttonOffDown = null;
     
     public JButton button = new JButton();
     final TextField display =new TextField("LCD",30);
@@ -40,9 +46,20 @@ public class GUI extends javax.swing.JFrame {
     final R2Button  R2 = new R2Button("R2");
     final R3Button  R3 = new R3Button("R3");
     final R4Button  R4 = new R4Button("R4");
-    final innerbuttons ibutton = new innerbuttons();
+    final innerbuttons ibutton;
     
-
+    public void initialiseImages()
+    {
+       try {
+            buttonOnUp = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/upon.png")));
+            buttonOnDown = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/downon.png")));
+            buttonOffUp = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/upoff.png")));
+            buttonOffDown = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/downoff.png")));
+        } catch(Exception e) {
+            System.out.println("Failed to initialise images.");
+            System.exit(1);
+        }
+    }
     
     /**
      * Creates an ON button class to perform an action when it is clicked
@@ -61,24 +78,17 @@ public class GUI extends javax.swing.JFrame {
         */
         @Override
         public void actionPerformed(ActionEvent e){
-            try{
-                Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
-            
-                for (int i=0;i<ibutton.buttons.length;i++)
+            for (int i=0;i<ibutton.buttons.length;i++)
+            {
+                for (int j=0;j<ibutton.buttons[i].length;j++)
                 {
-                    for (int j=0;j<ibutton.buttons[i].length;j++)
+                    if (!state)
                     {
-                        if (!state)
-                        {
-                            Controller.getCurrentLayer().ClearDots();
-                            ibutton.buttons[i][j].setIcon(new ImageIcon(gridOffImg));
-                        }
-                        ibutton.buttons[i][j].setEnabled(state);
+                        Controller.getCurrentLayer().ClearDots();
+                        ibutton.buttons[i][j].setIcon(buttonOffUp);
                     }
+                    ibutton.buttons[i][j].setEnabled(state);
                 }
-                
-            } catch (IOException ex) {
-                //image not found
             }
             
             //sets every button to be active or inactive.
@@ -162,85 +172,109 @@ public class GUI extends javax.swing.JFrame {
   */
    class innerbuttons extends JPanel
    {
-       JButton [][] buttons;
+        JButton [][] buttons;
+        
         public innerbuttons()
         {
             // new grid object to arrange the buttons
-
             setLayout(new GridLayout(16,16));        
-            buttons=new JButton[16][16];
+            buttons = new JButton[16][16];
             Border noBorder = BorderFactory.createEmptyBorder(); //used in for loop
-            try{
-                Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png"));
-            
-                for (int i=0;i<buttons.length;i++) //for loop to add the OnClickActionListener funtion to all the buttons
+            for (int i=0;i<buttons.length;i++) //for loop to add the OnClickActionListener funtion to all the buttons
+            {
+                for (int j=0;j<buttons[i].length;j++)
                 {
-                    for (int j=0;j<buttons[i].length;j++)
-                    {
-                        buttons[i][j]= new JButton("");
-                        buttons[i][j].addActionListener(new OnClickActionListener(i,j,buttons[i][j]));
-                        buttons[i][j].setBackground(Color.white);
+                    buttons[i][j]= new JButton("");
+                    buttons[i][j].addMouseListener(new userMouseInteracted(buttons[i][j],i,j));
+
+                    buttons[i][j].setBackground(Color.white);
 
 
-                        buttons[i][j].setBorder(noBorder);
-                        buttons[i][j].setIcon(new ImageIcon(gridOffImg));
+                    buttons[i][j].setBorder(noBorder);
+                    buttons[i][j].setIcon(buttonOffUp);
 
-                        add(buttons[i][j]);
-                    }
+                    add(buttons[i][j]);
                 }
-            } catch (IOException ex) {
-                //image not found
             }
         }
         
+        private class userMouseInteracted implements MouseListener
+        {
+            final int i;
+            final int j;
+            final JButton button;
+            
+            public userMouseInteracted(JButton button, int i, int j)
+            {
+                this.button = button;
+                this.i = i;
+                this.j = j;
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent evt){
+                if (Controller.getCurrentLayer().getDotState(i,j))
+                {
+                    button.setIcon(buttonOnDown);
+                }else{
+                    button.setIcon(buttonOffDown);
+                }
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent evt)
+            {
+                if (Controller.getCurrentLayer().getDotState(i,j))
+                {
+                    button.setIcon(buttonOnUp);
+                }else{
+                    button.setIcon(buttonOffUp);
+                }
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent evt)
+            {
+                //
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent evt)
+            {
+                //
+            }
+            
+            @Override
+            public void mouseClicked(MouseEvent evt)
+            {
+                if(Controller.getCurrentLayer().toggleDot(i,j))
+                {
+                    button.setIcon(buttonOnUp);
+                } else {
+                    button.setIcon(buttonOffUp);
+                }
+            }
+        }
         
         /**
         * Enables the button to run the method when it is clicked
         * @author Mark Fowden
         * @author Ben Fullalove
         */
-        private class OnClickActionListener implements ActionListener{
-            private final int i; // x coordinate
-            private final int j; // y coordinate
-            private final JButton button;
-            
-            public OnClickActionListener(int i, int j, JButton button){
-                this.i = i;
-                this.j = j;
-                this.button = button;
-            } 
-            @Override
-            public void actionPerformed(ActionEvent e){
-                //Code that happens when button clicked
-                
-                //if statement changes the picture
-                if(Controller.getCurrentLayer().toggleDot(i,j)){
-                    try {
-                        Image gridOnImg = ImageIO.read(getClass().getResource("resources/gridon.png"));
-                        button.setIcon(new ImageIcon(gridOnImg));
-                    } catch (IOException ex) { 
-                    
-                    }   
-                } else {
-                    try {
-                        Image gridOffImg = ImageIO.read(getClass().getResource("resources/gridoff.png")); 
-                        button.setIcon(new ImageIcon(gridOffImg));
-                    } catch (IOException ex) {
-                    
-                    }   
-                }
-            }
-        }
     }
-   
-   
    
     /**
      * Constructor for the GUI
      * @author Olawunmi Lawal
      * @author Ilden Dengtash
      */
-    public GUI() {
+    public GUI() 
+    {
+        //Image loading
+        initialiseImages();
+        
+        ibutton = new innerbuttons();
+        
         JPanel panleft = new JPanel(new GridBagLayout());
         JPanel panright = new JPanel(new GridBagLayout());
         JPanel panbottom = new JPanel(new GridBagLayout());
@@ -285,17 +319,6 @@ public class GUI extends javax.swing.JFrame {
         add(panright, BorderLayout.EAST);
         add(panbottom, BorderLayout.PAGE_END);
         add(pantop, BorderLayout.BEFORE_FIRST_LINE);
-        
-        //Turn the Simori-ON off
-        new java.util.Timer().schedule( 
-            new java.util.TimerTask() {
-                @Override
-                public void run() {
-                    on.doClick();
-                }
-            }, 
-            0
-        );
     }
     
     
@@ -326,16 +349,15 @@ public class GUI extends javax.swing.JFrame {
     * @author Ben Fullalove
     */
     public void setUp(){
-        JFrame frame = new GUI();
+        setUndecorated(true);
+        setShape(new RoundRectangle2D.Double(0,0,940,895,200,200));
         
-        frame.setUndecorated(true);
-        frame.setShape(new RoundRectangle2D.Double(0,0,940,895,200,200));
-        
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(940,895);
-        frame.setVisible(true);
-        frame.setResizable(true);
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(700,700); //940,895
+        setVisible(true);
+        setLocationRelativeTo(null);
+        setResizable(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
