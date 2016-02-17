@@ -2,6 +2,12 @@
 Simulation of a Tenori-ON in Java, HYPE.
 :squirrel::shipit:
 
+Testing Layer Stuff :squirrel::shipit:-W
+Changing Previous Tests :squirrel::shipit:-T
+Adding Consistency Function :squirrel::shipit:-M
+Creating JavaDoc :squirrel::shipit:-I
+GUI :squirrel::shipit:-B
+
 Message of the day: "The journey of a thousand miles
                      begins with a working GUI." -Some Guy 2016
 
