@@ -1,5 +1,4 @@
 package simorion;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,17 +8,17 @@ import java.awt.TextField;
 import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.imageio.*;
-import java.io.*;
+import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
-import javax.swing.border.*;
-import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import javax.swing.border.Border;
+import javax.swing.JLabel;
 
 /**
 * Class GUI to create Simori-On
