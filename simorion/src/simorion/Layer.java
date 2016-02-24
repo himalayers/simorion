@@ -38,6 +38,7 @@ public class Layer implements Serializable{
         }
     }
     
+   
     public boolean getDotState(int posx, int posy){
         return dots[posx][posy];
     }
@@ -50,10 +51,18 @@ public class Layer implements Serializable{
         return column;
     }
     
+    /*
+    *Method to get an intrument
+    *@return returns instrument
+    */
     public int getInstrument(){
         return instrument;
     }
     
+    /*
+    *Method to get the velocity
+    *@return returns velocity
+    */
     public int getVelocity(){
         return velocity;
     }
