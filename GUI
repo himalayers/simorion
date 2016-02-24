@@ -1,6 +1,6 @@
-
-package gui;
+package simorion;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
@@ -9,19 +9,41 @@ import java.awt.TextField;
 import javax.swing.JPanel;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.imageio.*;
+import java.io.*;
+import javax.swing.BorderFactory;
+import javax.swing.border.*;
+import java.awt.Image;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
+/**
+* Class GUI to create Simori-On
+* @author Team C
+* @author JavaDoc made by Ilden
+* @version 1
+*/
+public class GUI extends javax.swing.JFrame {
 
-public class GUI extends JFrame{
-   /*
-    * program created by wunmi ;)
-    * this part makes objects of the mode classes,
-    * and the innerbuttons
-    */  
+    //Attributes for the GUI
+    ImageIcon buttonOnUp = null;
+    ImageIcon buttonOnDown = null;
+    ImageIcon buttonOffUp = null;
+    ImageIcon buttonOffDown = null;
+    ImageIcon buttonNotClickable = null;
+    ImageIcon backgroundImage = null;
+    ImageIcon sidedown = null;
+    ImageIcon sideup = null;
+    
     
     public JButton button = new JButton();
     final TextField display =new TextField("LCD",30);
     final OKButton  ok = new OKButton("OK");
-    final ONButton  on = new ONButton("ON");
+    final ONButton  on = new ONButton("OFF");
     final L1Button  L1 = new L1Button("L1");
     final L2Button  L2 = new L2Button("L2");
     final L3Button  L3 = new L3Button("L3");
@@ -30,164 +52,382 @@ public class GUI extends JFrame{
     final R2Button  R2 = new R2Button("R2");
     final R3Button  R3 = new R3Button("R3");
     final R4Button  R4 = new R4Button("R4");
-    final innerbuttons butt = new innerbuttons();
-    
-    /*
-     * empty classes for the mode buttons
-     * 
+        
+    final innerbuttons ibutton;
+    /**
+     * Creates an ON button class to perform an action when it is clicked
+     * @author Mark Fowden
+     * @author Ben Fullalove
      */
-   
-   class OKButton extends JButton {
-        OKButton(String s){
-            super(s);
+    public void initialiseImages()
+    {
+       try {
+            buttonOnUp = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/upon.png")));
+            buttonOnDown = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/downon.png")));
+            buttonOffUp = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/upoff.png")));
+            buttonOffDown = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/downoff.png")));
+            buttonNotClickable = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/disabled.png")));
+            backgroundImage = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/background.png")));
+            sidedown = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/sidedown.png")));
+            sideup = new ImageIcon(ImageIO.read(GUI.class.getResource("resources/sideup.png")));
+        } catch(Exception e) {
+            System.out.println("Failed to initialise images.");
+            System.exit(1);
         }
     }
-        
     
-    class ONButton extends JButton {
+    /**
+     * Creates an ON button class to perform an action when it is clicked
+     * @author Tom Fullalove
+     */
+    class ONButton extends JButton implements ActionListener{
+        boolean state;
+        boolean waitingForClockHand;
         ONButton(String s){
-            super(s);
+            super();
+            addActionListener(this);
+            state=true;//false means off
+            waitingForClockHand = false;
         }
+        
+        /* Method that is ran when the on button is clicked
+        * @author Tom Fullalove
+        */
+        @Override
+        public void actionPerformed(ActionEvent e){
+            //Change the ON/OFF state
+            state = !state;
+            
+            //Reset the clock hand        
+            if (!state){
+                Controller.getCurrentLayer().ClearDots();
+                Controller.clockhand.pause();
+            }else{
+                Controller.clockhand.play();
+            }
+            
+            //Reset the buttons
+            for (int i=0;i<ibutton.buttons.length;i++)
+            {
+                for (int j=0;j<ibutton.buttons[i].length;j++)
+                {
+                    if (!state)
+                    {
+                        ibutton.buttons[i][j].setIcon(buttonOffDown);
+                    }else{
+                        ibutton.buttons[i][j].setIcon(buttonOffUp);
+                    }
+                }
+            }
+            
+            //sets every button to be active or inactive.
+            
+            ok.setEnabled(state);
+            L1.setEnabled(state);
+            L2.setEnabled(state);
+            L3.setEnabled(state);
+            L4.setEnabled(state);
+            R1.setEnabled(state);
+            R2.setEnabled(state);
+            R3.setEnabled(state);
+            R4.setEnabled(state);
+            display.setEnabled(state);
+            
         }
-
+    }
+    
+    /**
+     * Classes for the "OK" and the eight mode buttons.
+     * @author Olawunmi Lawal
+     */
+    class OKButton extends JButton {
+        OKButton(String s){
+            super();
+        }
+    }
     class L1Button extends JButton{
         L1Button (String s){
-            super(s);
+            super();
+            this.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    Controller.getCurrentLayer().instrument += 1;
+                }
+            });
         }
     }
     class L2Button extends JButton{
         L2Button (String s){
-            super(s);
+            super();
         }
     }
     class L3Button extends JButton{
         L3Button (String s){
-            super(s);
+            super();
         } 
     }
     class L4Button extends JButton{
         L4Button (String s){
-            super(s);
+            super();
         } 
     }
     class R1Button extends JButton{
         R1Button (String s){
-            super(s);
+            super();
         }
     }
    class R2Button extends JButton{
         R2Button (String s){
-            super(s);
-  }
+            super();
+        }
    }
    class R3Button extends JButton{
         R3Button (String s){
-            super(s);
+            super();
         }
    }
    class R4Button extends JButton{
         R4Button (String s){
-            super(s);
+            super();
         }
    }
-   //the array of inner buttons
-   class innerbuttons extends JButton{
-        public innerbuttons(){
-        // new grid object to arrange the buttons
+   
+  /**
+  * Class to create the XLENxYLEN matrix buttons for each layer
+  * @author Olawunmi Lawal
+  * @author Ben Fullalove
+  */
+   class innerbuttons extends JPanel
+   {
+        JButton [][] buttons;
         
-        setLayout(new GridLayout(16,16));        
-       JButton [][] button=new JButton[16][16];
-       for (int i=0;i<button.length;i++){
-            for (int j=0;j<button[i].length;j++){
-            button[i][j]= new JButton("");
-            add(button[i][j]);
-            
-            
-            
+        public innerbuttons()
+        {
+            // new grid object to arrange the buttons
+            setLayout(new GridLayout(Controller.XLEN,Controller.YLEN));        
+            buttons = new JButton[Controller.XLEN][Controller.YLEN];
+            Border noBorder = BorderFactory.createEmptyBorder(); //used in for loop
+            for (int i=0;i<buttons.length;i++) //for loop to add the OnClickActionListener funtion to all the buttons
+            {
+                for (int j=0;j<buttons[i].length;j++)
+                {
+                    buttons[i][j]= new JButton("");
+                    buttons[i][j].setVisible(true);
+                    
+                    buttons[i][j].addMouseListener(new userMouseInteracted(buttons[i][j],i,j));
+
+                    buttons[i][j].setBackground(Color.white);
+                    
+
+                    buttons[i][j].setBorder(noBorder);
+                    buttons[i][j].setIcon(buttonOffUp);
+
+                    add(buttons[i][j]);
+                }
             }
-       }
         }
-    
+        
+        private class userMouseInteracted implements MouseListener
+        {
+            final int i;
+            final int j;
+            final JButton button;
+            boolean down;
+            
+            public userMouseInteracted(JButton button, int i, int j)
+            {
+                this.button = button;
+                this.i = i;
+                this.j = j;
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent evt){
+                if(on.state){
+                    if (Controller.getCurrentLayer().getDotState(i,j))
+                    {
+                        button.setIcon(buttonOnDown);
+                    }else{
+                        button.setIcon(buttonOffDown);
+                    }
+                }
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent evt)
+            {
+                if(on.state){
+                    if(Controller.getCurrentLayer().toggleDot(i,j))
+                    {
+                        button.setIcon(buttonOnUp);
+                    } else {
+                        button.setIcon(buttonOffUp);
+                    }
+                }
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent evt)
+            {
+                //
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent evt)
+            {
+                //
+            }
+            
+            @Override
+            public void mouseClicked(MouseEvent evt)
+            {
+                //
+            }
+        }
+        
+        /**
+        * Enables the button to run the method when it is clicked
+        * @author Mark Fowden
+        * @author Ben Fullalove
+        */
     }
    
-/*
- * here is the constructor for the GUI class, 
- * the objects are added into individual JPanels 
- * there is no JPanel for the array of inner button cos it shrinks
- * the buttons. 
- */
-
-    public GUI(){
-        JPanel panl=new JPanel(new GridBagLayout());
-        JPanel panr=new JPanel(new GridBagLayout());
-        JPanel panb=new JPanel(new GridBagLayout());
-        JPanel panh=new JPanel(new GridBagLayout());
+    /**
+     * Constructor for the GUI
+     * @author Olawunmi Lawal
+     * @author Ilden Dengtash
+     * @author Ben Fullalove :added panback and back objects, configured button visuals
+     */
+    public GUI() 
+    {
+        //Image loading
+        initialiseImages();
+        
+        
+        JLabel back = new JLabel(backgroundImage);
+        back.setLayout(new GridBagLayout());
+        JPanel panleft = new JPanel(new GridBagLayout());
+        JPanel panright = new JPanel(new GridBagLayout());
+        JPanel panbottom = new JPanel(new GridBagLayout());
+        JPanel pantop = new JPanel(new GridBagLayout());
+        
+        JPanel panback = new JPanel(new GridBagLayout());
+        ibutton = new innerbuttons();
+        
+        
+        
         
         setTitle("Simori-on");
         //using GridBagConstraints to specify the look of the 
         //whole program.
-        GridBagConstraints gbc=new GridBagConstraints();
-        gbc.insets=new Insets(15,15,15,15);
+        
+        //We could seriously truncate this code by eliminating the multiple copies of gbc.gridx=0;
+        //Putting it in a for loop, and using arraylists for the Ri and Li objects,
+        //But some guy on the internet said to specify gbc's every time an add is called...
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        gbc.insets = new Insets(15,15,15,15);//padding around panels
+        
         gbc.gridx=0;
         gbc.gridy=0;
-        panl.add(L1,gbc);
+        panleft.add(L1,gbc);
+        panright.add(R1,gbc);
+        panbottom.add(ok,gbc);
+        
         gbc.gridx=0;
         gbc.gridy=1;
-        panl.add(L2,gbc);
+        panleft.add(L2,gbc);
+        panright.add(R2,gbc);
+        
         gbc.gridx=0;
         gbc.gridy=2;
-        panl.add(L3,gbc);
+        panleft.add(L3,gbc);
+        panright.add(R3,gbc);
+        
         gbc.gridx=0;
         gbc.gridy=3;
-        panl.add(L4,gbc);
-        gbc.gridx=0;
-        gbc.gridy=4; 
+        panleft.add(L4,gbc);
+        panright.add(R4,gbc);
         
-        gbc.gridx=0;
-        gbc.gridy=0;
-        panr.add(R1,gbc);
-        gbc.gridx=0;
-        gbc.gridy=1;
-        panr.add(R2,gbc);
-        gbc.gridx=0;
-        gbc.gridy=2;
-        panr.add(R3,gbc);
-        gbc.gridx=0;
-        gbc.gridy=3;
-        panr.add(R4,gbc);
-        gbc.gridx=0;
-        gbc.gridy=4;
-        
-        gbc.gridx=0;
-        gbc.gridy=0;
-        
-        panb.add(ok,gbc);  
         gbc.gridx=10;
         gbc.gridy=0;
-        panb.add(display, gbc);
+        panbottom.add(display, gbc);
+        gbc.gridx = 0;
+        pantop.add(on,gbc);
         
-        panh.add(on);
        
-        add(panl, BorderLayout.WEST);
-        add(panr, BorderLayout.EAST);
-        add(panb, BorderLayout.PAGE_END);
-        add(panh, BorderLayout.BEFORE_FIRST_LINE);
-        add(butt, BorderLayout.CENTER);
+        L1.setIcon(sideup);
+        L2.setIcon(sideup);
+        L3.setIcon(sideup);
+        L4.setIcon(sideup);
+        R1.setIcon(sideup);
+        R2.setIcon(sideup);
+        R3.setIcon(sideup);
+        R4.setIcon(sideup);
+        ok.setIcon(sideup);
+        on.setIcon(sideup);
+        
+        Border noBorder = BorderFactory.createEmptyBorder();
+        L1.setBorder(noBorder);
+        L2.setBorder(noBorder);
+        L3.setBorder(noBorder);
+        L4.setBorder(noBorder);
+        R1.setBorder(noBorder);
+        R2.setBorder(noBorder);
+        R3.setBorder(noBorder);
+        R4.setBorder(noBorder);
+        ok.setBorder(noBorder);
+        on.setBorder(noBorder);
+        
+        panback.add(ibutton);
+        panback.setPreferredSize( new Dimension( 1000,1000 ) );
+        panback.setOpaque(false);
+        
+        panleft.setOpaque(false);
+        panright.setOpaque(false);
+        pantop.setOpaque(false);
+        panbottom.setOpaque(false);
+        
+        gbc.anchor=GridBagConstraints.WEST;
+        back.add(panleft, gbc);
+        gbc.anchor=GridBagConstraints.EAST;
+        back.add(panright, gbc);
+        gbc.anchor=GridBagConstraints.PAGE_END;
+        back.add(panbottom, gbc);
+        gbc.anchor=GridBagConstraints.PAGE_START;
+        back.add(pantop, gbc);
+        
+            
+        gbc.anchor=GridBagConstraints.CENTER;
+        back.add(panback,gbc);
+        
+        add(back);
         
     }
     
-   
-    
-    
-    
-    public static void main(String[] args) {
-        // TODO code application logic here
-        JFrame frame =new GUI();
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,400);
-        frame.setVisible(true);
-        frame.setResizable(true);
+
+    /**
+    * A method used to set up the GUI and limit the form to a rounded rectangle
+    * @author Olawunmi Lawal
+    * @author Ben Fullalove
+    */
+    public void setUp(){
         
+        setUndecorated(true);
+        int xsize = 419+Controller.XLEN*42;//250
+        int ysize = 452+Controller.YLEN*40;
+        setShape(new RoundRectangle2D.Double(0,0,xsize,ysize,300,300));
+        
+       
+        pack();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(xsize,ysize); //940,895
+        setVisible(true);
+        setLocationRelativeTo(null);
+        setResizable(true);
     }
+
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
+    
+    
 }
