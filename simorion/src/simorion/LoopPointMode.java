@@ -17,10 +17,8 @@ public class LoopPointMode implements Mode{
     
     //Matrix buttons functionality
     @Override
-    public void MatrixEventAction(){
-        //What happens when a button is clicked?
-        
-        //get i and j
+    public void MatrixEventAction(int i, int j){
+        //What happens when button (i,j) is clicked?
         
         //show that a button has been selected (call Ildens function on innerbutton)
         
