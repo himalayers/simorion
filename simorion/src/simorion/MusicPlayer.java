@@ -40,6 +40,20 @@ public class MusicPlayer
         }
         return synthesizer;
     }
+    
+    /**
+    * Method to return the instrument name of the number that represents it
+    * 
+    * @param synthesizer the synthesizer being used
+    * @param int the number to be converted to it's instrument name
+    * 
+    * @returns the instrument name
+    *
+    */
+    public String getInstrumentName(Synthesizer synthesizer, int i){
+        Instrument[] instruments = synthesizer.getDefaultSoundbank().getInstruments();
+        return instruments[i].toString();
+    }
 
     /*
      * Method to play normal instrument.
