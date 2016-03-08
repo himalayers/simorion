@@ -15,5 +15,5 @@ public interface Mode{
     public void OKEventAction();
     
     //Matrix buttons functionality
-    public void MatrixEventAction();
+    public void MatrixEventAction(int i, int j);
 }
