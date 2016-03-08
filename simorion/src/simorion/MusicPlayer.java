@@ -52,7 +52,7 @@ public class MusicPlayer
     */
     public String getInstrumentName(Synthesizer synthesizer, int i){
         Instrument[] instruments = synthesizer.getDefaultSoundbank().getInstruments();
-        return instruments[i].toString();
+        return instruments[i].toString().substring(12,25);
     }
 
     /*
