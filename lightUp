@@ -1,5 +1,5 @@
 public void lightUp(int x, int y, boolean horiz, boolean vert){
-  for(int i=0;1<16;i++){
+  for(int i=0;i<16;i++){
     if(horiz)
     {
         mainGUI.ibutton.buttons[y,i].setIcon(mainGUI.buttonOnUp);
