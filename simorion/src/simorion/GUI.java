@@ -119,36 +119,47 @@ public class GUI extends javax.swing.JFrame {
      * Classes for the "OK" and the eight mode buttons.
      * @author Olawunmi Lawal
      */
+     
+     //CHANGE MADE HERE!!!!!!!
     class OKButton extends JButton {
         OKButton(String s){
             super(s);
         }
     }
-    class L1Button extends JButton{
-        L1Button (String s){
-            super(s);
+    class L1Button extends JButton  {
+	L1Button (String s){          
+	super();
+        //making an object of the voice mode
+          VoiceMode L1mode=new VoiceMode();   
+            
+	}
+}  
+ class L2Button extends JButton{
+   L2Button (String s){     
+   super();
+   //making an object of the voice mode
+   //100% sure i am doing something wrong doing it like 
+   //oh well just make changes
+    VelocityMode L2mode=new VelocityMode();
         }
-    }
-    class L2Button extends JButton{
-        L2Button (String s){
-            super(s);
-        }
-    }
-    class L3Button extends JButton{
-        L3Button (String s){
-            super(s);
-        } 
-    }
-    class L4Button extends JButton{
-        L4Button (String s){
-            super(s);
-        } 
-    }
-    class R1Button extends JButton{
-        R1Button (String s){
-            super(s);
-        }
-    }
+ }
+ class L3Button extends JButton{
+    L3Button (String s){    
+   super();
+    //making an object of the voice mode
+     LoopSpeedMode L3Mode= new LoopSpeedMode(); 
+   } 
+  }
+    
+class L4Button extends JButton{
+      L4Button (String s){ 
+      super();
+       //making an object of the voice mode
+        LoopPointMode L4Mode=new LoopPointMode();
+} 
+  }
+  //CHANGE ENDS HERE!!!!
+  
    class R2Button extends JButton{
         R2Button (String s){
             super(s);
