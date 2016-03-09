@@ -14,6 +14,7 @@ import java.util.Arrays;
  */
 public class Controller {
     static Layer currentLayer;
+    static Mode currentMode;
 
     /*
     * @param args arguments
@@ -106,5 +107,22 @@ public class Controller {
     */
     public static void setCurrentLayer(Layer layer){
         currentLayer = layer;
+    }
+    
+    /*
+    * @return the current Mode
+    * @Ilden Dengtash
+    */
+    public static Mode getMode(){
+        return currentMode;
+    }
+    
+    /*
+    *Set the current mode
+    *@param mode ...
+    *@author Ilden Dengtash
+    */
+    public static void setMode(Mode mode){
+        currentMode = mode;
     }
 }
